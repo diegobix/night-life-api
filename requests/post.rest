@@ -1,0 +1,14 @@
+POST http://localhost:3001/api/locales
+Content-Type: application/json
+
+{
+    "nombre": "Test post",
+    "direccion": "Calle nueva",
+    "musica": "music",
+    "consumicion": 7,
+    "horario": "21:00-02:00"
+}
+
+###
+
+DELETE http://localhost:3001/api/locales/3
