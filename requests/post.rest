@@ -12,3 +12,7 @@ Content-Type: application/json
 ###
 
 DELETE http://localhost:3001/api/locales/3
+
+###
+
+GET http://localhost:3001/api/locales

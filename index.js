@@ -51,13 +51,40 @@ app.get('/api/locales/:id', (request, resposne) => {
   local ? resposne.json(local) : resposne.status(404).end()
 })
 
+const generateId = () => {
+  const maxId = locales.length > 0 ? Math.max(...locales.map(l => l.id)) : 0
+  return maxId + 1
+}
+
 app.post('/api/locales', (request, response) => {
   let local = request.body
-  local.id = locales.length+1
   
-  locales = locales.concat(local)
+  if (!local.nombre) {
+    return response.status(400).json({
+      error: 'name missing'
+    })
+  } else if (!local.direccion) {
+    return response.status(400).json({
+      error: 'address missing'
+    })
+  } else if (!local.musica) {
+    return response.status(400).json({
+      error: 'music missing'
+    })
+  } else if (!local.horario) {
+    return response.status(400).json({
+      error: 'schedule missing'
+    })
+  } else if (!local.consumicion) {
+    return response.status(400).json({
+      error: 'prize missing'
+    })
+  }
 
-  response.json(local)
+  const finalLocal = {...local, id: generateId() }
+
+  response.json(finalLocal)
+  
 })
 
 app.delete('/api/locales/:id', (request, response) => {
@@ -67,7 +94,13 @@ app.delete('/api/locales/:id', (request, response) => {
   response.status(204).end()
 })
 
+const unknownEndpoint = (req, res) => {
+  res.status(404).send({error: 'unknown endpoint'})
+}
+
+app.use(unknownEndpoint)
+
 // Por ultimo se establece el puerto donde se alojara el server
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT)
 console.log(`Server running on port ${PORT}`);
