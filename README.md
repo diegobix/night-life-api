@@ -12,11 +12,11 @@ Mandar solicitud `GET` a la ruta principal: [https://night-life-api.onrender.com
 
 ### Obtener información de un local concreto
 
-Mandar solicitud `GET` a la ruta: [https://night-life-api.onrender.com/api/locales/id]() sustituyendo 'id' por el numero correspondiente.
+Mandar solicitud `GET` a la ruta: `https://night-life-api.onrender.com/api/locales/id` sustituyendo 'id' por el numero correspondiente.
 
 ### Agregar un local nuevo
 
-Mandar solicitud `POST` a la ruta: [https://night-life-api.onrender.com/api/locales](https://night-life-api.onrender.com/api/locales)
+Mandar solicitud `POST` a la ruta: `https://night-life-api.onrender.com/api/locales`
 Agregar el header: `Content-Type: application/json`
 Agregar la información del local como un objeto json en el body. Por ejemplo:
 ```json
@@ -31,11 +31,11 @@ Agregar la información del local como un objeto json en el body. Por ejemplo:
 
 ### Borrar un local concreto
 
-Mandar solicitud `DELETE` a la ruta: [https://night-life-api.onrender.com/api/locales/id]() sustituyendo 'id' por el numero correspondiente.
+Mandar solicitud `DELETE` a la ruta: `https://night-life-api.onrender.com/api/locales/id` sustituyendo 'id' por el numero correspondiente.
 
 ### Actualizar un local
 
-Mandar solicitud `PUT` a la ruta: [https://night-life-api.onrender.com/api/locales/id]() sustituyendo 'id' por el numero correspondiente.
+Mandar solicitud `PUT` a la ruta: `https://night-life-api.onrender.com/api/locales/id` sustituyendo 'id' por el numero correspondiente.
 Agregar el header: `Content-Type: application/json`
 Agregar la información del local como un objeto json en el body. Por ejemplo:
 ```json
