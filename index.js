@@ -1,6 +1,8 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const cors = require('cors')
+const Local = require('./models/local')
 
 let locales = [
   {
@@ -41,57 +43,53 @@ app.get('/', (request, response) => {
 
 // Ruta 2: Solicitudes HTTP GET a la ruta notes de la aplicacion
 app.get('/api/locales', (request, response) => {
-  response.json(locales)
+  Local.find({}).then(locales => {
+    response.json(locales)
+  })
 })
 
-app.get('/api/locales/:id', (request, resposne) => {
-  const id = Number(request.params.id)
-  const local = locales.find(local => local.id === id)
-
-  local ? resposne.json(local) : resposne.status(404).end()
+app.get('/api/locales/:id', (request, resposne, next) => {
+  Local.findById(request.params.id)
+    .then(local => {
+      if (local) {
+        response.json(local)
+      } else {
+        response.status(404).end()
+      }
+    })
+    .catch(error => next(error))
 })
 
-const generateId = () => {
-  const maxId = locales.length > 0 ? Math.max(...locales.map(l => l.id)) : 0
-  return maxId + 1
-}
+app.post('/api/locales', (request, response, next) => {
+  let body = request.body
 
-app.post('/api/locales', (request, response) => {
-  let local = request.body
-  
-  if (!local.nombre) {
-    return response.status(400).json({
-      error: 'name missing'
-    })
-  } else if (!local.direccion) {
-    return response.status(400).json({
-      error: 'address missing'
-    })
-  } else if (!local.musica) {
-    return response.status(400).json({
-      error: 'music missing'
-    })
-  } else if (!local.horario) {
-    return response.status(400).json({
-      error: 'schedule missing'
-    })
-  } else if (!local.consumicion) {
-    return response.status(400).json({
-      error: 'prize missing'
-    })
-  }
+  const local = new Local({
+    ...body
+  })
 
-  const finalLocal = {...local, id: generateId() }
-
-  response.json(finalLocal)
+  local.save()
+    .then(savedLocal => {
+      response.json(savedLocal)
+    })
+    .catch(error => next(error))
   
 })
 
 app.delete('/api/locales/:id', (request, response) => {
-  const id = Number(request.params.id)
-  locales = locales.filter(local => local.id !== id)
+  Local.findByIdAndRemove(request.params.id)
+    .then(res => {
+      response.status(204).end()
+    })
+    .catch(error => next(error))
+})
 
-  response.status(204).end()
+app.put('/api/locales/:id', (request, response, next) => {
+  const {nombre, direccion, musica, consumicion, horario} = request.body
+  Local.findByIdAndUpdate(request.params.id, {nombre, direccion, musica, consumicion, horario}, {new: true, runValidators: true, context: 'query'})
+    .then(updatedLocal => {
+      response.json(updatedLocal)
+    })
+    .catch(error => next(error))
 })
 
 const unknownEndpoint = (req, res) => {
@@ -100,7 +98,21 @@ const unknownEndpoint = (req, res) => {
 
 app.use(unknownEndpoint)
 
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message)
+
+  if (error.name === 'CastError') {
+    return response.status(400).send({error: 'Malformatted id'})
+  } else if (error.name === 'ValidationError') {
+    return response.status(400).json({error: error.message})
+  }
+
+  next(error)
+}
+
+app.use(errorHandler)
+
 // Por ultimo se establece el puerto donde se alojara el server
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 app.listen(PORT)
 console.log(`Server running on port ${PORT}`);

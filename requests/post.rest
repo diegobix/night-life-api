@@ -6,13 +6,27 @@ Content-Type: application/json
     "direccion": "Calle nueva",
     "musica": "music",
     "consumicion": 7,
-    "horario": "21:00-02:00"
+    "horario": ""
 }
 
 ###
 
-DELETE http://localhost:3001/api/locales/3
+DELETE http://localhost:3001/api/locales/64578e2c8008248bba6e852e
 
 ###
 
 GET http://localhost:3001/api/locales
+
+
+###
+
+PUT http://localhost:3001/api/locales/64578e5e8008248bba6e8534
+Content-Type: application/json
+
+{
+    "nombre": "Test update",
+    "direccion": "Calle nueva",
+    "musica": "music",
+    "consumicion": 7,
+    "horario": "21:00-02:00"
+}
