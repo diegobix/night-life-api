@@ -46,6 +46,7 @@ Agregar la información del local como un objeto json en el body. Por ejemplo:
     "consumicion": 3,
     "horario": "14:00 a 17:00"
 }
+```
 
 ## Instalar el proyecto
 
