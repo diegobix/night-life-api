@@ -1,0 +1,13 @@
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+    "name": "admin",
+    "username": "root",
+    "email": "admin@night-life.com",
+    "password": "toor"
+}
+
+###
+
+GET http://localhost:3001/api/users

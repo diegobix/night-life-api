@@ -31,6 +31,10 @@ const localSchema = new mongoose.Schema({
     minLength: 2,
     required: true
   },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
 })
 
 localSchema.set('toJSON', {
@@ -41,4 +45,6 @@ localSchema.set('toJSON', {
   }
 })
 
-module.exports = mongoose.model('Local', localSchema)
+const Local = mongoose.model('Local', localSchema)
+
+module.exports = Local
