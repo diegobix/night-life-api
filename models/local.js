@@ -16,6 +16,11 @@ const localSchema = new mongoose.Schema({
     minLength: 2,
     required: true
   },
+  url: {
+    type: String,
+    minLength: 5,
+    required: true
+  },
   consumicion: {
     type: Number,
     minLength: 1,

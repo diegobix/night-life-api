@@ -12,7 +12,7 @@
     "NightLife"
   ],
   "author": "Diego Arenas Suarez",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "nodemon": "^2.0.21"
   },

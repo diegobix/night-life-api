@@ -5,8 +5,9 @@ Content-Type: application/json
     "nombre": "Test post",
     "direccion": "Calle nueva",
     "musica": "music",
+    "url": "www.test.com",
     "consumicion": 7,
-    "horario": ""
+    "horario": "03:00"
 }
 
 ###
