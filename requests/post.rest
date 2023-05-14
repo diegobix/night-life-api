@@ -7,7 +7,8 @@ Content-Type: application/json
     "musica": "music",
     "url": "www.test.com",
     "consumicion": 7,
-    "horario": "03:00"
+    "horario": "03:00",
+    "userId": "645a2881417af83932e981eb"
 }
 
 ###

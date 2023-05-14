@@ -33,6 +33,8 @@ const userSchema = new mongoose.Schema({
   }]
 })
 
+// TODO: Cambiar review de subdocumento a modelo
+
 userSchema.plugin(uniqueValidator)
 
 userSchema.set('toJSON', {
