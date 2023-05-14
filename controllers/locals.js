@@ -1,22 +1,25 @@
 const localsRouter = require('express').Router()
 const Local = require('../models/local')
 
-localsRouter.get('/', (request, resposne) => {
+localsRouter.get('/', (request, response) => {
   Local.find({}).then(locals => {
-    resposne.json(locals)
+    response.json(locals)
   })
 })
 
-localsRouter.get('/:id', (request, resposne, next) => {
+localsRouter.get('/:id', (request, response, next) => {
   Local.findById(request.params.id)
     .then(local => {
+      console.log(local)
       if (local) {
         response.json(local)
       } else {
         response.status(404).end()
       }
     })
-    .catch(error => next(error))
+    .catch(error =>{
+      console.log("error " + error)
+      next(error)})
 })
 
 localsRouter.post('/', (request, response, next) => {

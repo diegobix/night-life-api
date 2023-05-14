@@ -1,5 +1,22 @@
 const mongoose = require('mongoose')
 
+const review = new mongoose.Schema({
+  content: {
+    type: String,
+    minLength: 2,
+    required: true
+  },
+  date: {
+    type: Date,
+    required: true
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  }
+})
+
 const localSchema = new mongoose.Schema({
   nombre: {
     type: String,
@@ -33,8 +50,10 @@ const localSchema = new mongoose.Schema({
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  }
+    ref: 'User',
+    required: true
+  },
+  reviews: [review]
 })
 
 localSchema.set('toJSON', {
