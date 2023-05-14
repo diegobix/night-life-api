@@ -27,6 +27,10 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Local'
   }],
+  reviews: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Review'
+  }]
 })
 
 userSchema.plugin(uniqueValidator)
