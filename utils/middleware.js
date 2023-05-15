@@ -1,7 +1,7 @@
 const logger = require('./logger')
 
 const requestLogger = (request, response, next) => {
-  const clientIP = req.headers['x-forwarded-for']?.split(',').shift() || req.socket?.remoteAddress
+  const clientIP = request.headers['x-forwarded-for']?.split(',').shift() || req.socket?.remoteAddress
   logger.info('Dir:', clientIP)
   logger.info('Method:', request.method)
   logger.info('Path:  ', request.path)
