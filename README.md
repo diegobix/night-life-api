@@ -3,21 +3,42 @@
 Api de la aplicacion web NightLife
 
 - [NightLife API](#nightlife-api)
-  - [Uso de la API](#uso-de-la-api)
+  - [Login en la aplicacion](#login-en-la-aplicacion)
+    - [Token](#token)
+  - [Locales](#locales)
     - [Obtener todos los locales de la base de datos](#obtener-todos-los-locales-de-la-base-de-datos)
     - [Obtener información de un local concreto](#obtener-información-de-un-local-concreto)
     - [Agregar un local nuevo](#agregar-un-local-nuevo)
-    - [Borrar un local concreto](#borrar-un-local-concreto)
     - [Actualizar un local](#actualizar-un-local)
     - [Agregar reseña](#agregar-reseña)
   - [Usuarios](#usuarios)
     - [Agregar un nuevo usuario](#agregar-un-nuevo-usuario)
+    - [Obtener informacion de tu perfil](#obtener-informacion-de-tu-perfil)
     - [Obtener informacion de un usuario](#obtener-informacion-de-un-usuario)
   - [Instalar el proyecto](#instalar-el-proyecto)
 
+## Login en la aplicacion
 
+Mandar solicitud `POST` a la ruta `https://night-life-api.onrender.com/api/login` con el header `Content-Type: application/json`. En el `body` de la solicitud incluir en formato json los datos de login:
 
-## Uso de la API
+```json
+{
+  "username": "nombre de usuario",
+  "password": "password"
+}
+```
+
+### Token
+
+En caso de ser correcto el login, se recibira un [token](https://jwt.io/introduction) en formato `string` que se debera almacenar en el local storage del front.
+
+El token almacenado se usara para autentificarse en distintas solicitudes a la API. Para ello se usara el header `Authorization` con el valor `Bearer token` done `token` debera ser sustituido por el valor de este. Por ejemplo:
+
+```http
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+```
+
+## Locales
 
 Ruta principal: [https://night-life-api.onrender.com/](https://night-life-api.onrender.com/)
 
@@ -33,30 +54,29 @@ Mandar solicitud `GET` a la ruta: `https://night-life-api.onrender.com/api/local
 
 Mandar solicitud `POST` a la ruta: `https://night-life-api.onrender.com/api/locales`
 Agregar el header: `Content-Type: application/json`
+Agregar el header: `Authorization` con el valor `Bearer token`, sustituyendo `token` por el valor correspondiente y respetando el espacio.
 Agregar la información del local como un objeto json en el body. Por ejemplo:
+
 ```json
 {
     "nombre": "Test post",
     "direccion": "Calle nueva",
     "musica": "music",
     "url": "www.test.com",
-    "consumicion": 7,
+    "consumicion": "7",
     "horario": "23:00-03:00",
-    "userId": "645a2881417af83932e98aaa"
 }
 ```
 
-userId es el id de usuario que crea el local.
-
-### Borrar un local concreto
-
-Mandar solicitud `DELETE` a la ruta: `https://night-life-api.onrender.com/api/locales/id` sustituyendo 'id' por el numero correspondiente.
+La respuesta devolvera el local creado si la solicitud tiene exito.
 
 ### Actualizar un local
 
 Mandar solicitud `PUT` a la ruta: `https://night-life-api.onrender.com/api/locales/id` sustituyendo 'id' por el numero correspondiente.
 Agregar el header: `Content-Type: application/json`
+Agregar el header: `Authorization` con el valor `Bearer token`, sustituyendo `token` por el valor correspondiente y respetando el espacio.
 Agregar la información del local como un objeto json en el body. Por ejemplo:
+
 ```json
 {
     "nombre": "Test post",
@@ -64,8 +84,7 @@ Agregar la información del local como un objeto json en el body. Por ejemplo:
     "musica": "music",
     "url": "www.test.com",
     "consumicion": 7,
-    "horario": "23:00-03:00",
-    "userId": "645a2881417af83932e98aaa"
+    "horario": "23:00-03:00"
 }
 ```
 
@@ -73,18 +92,14 @@ Agregar la información del local como un objeto json en el body. Por ejemplo:
 
 Mandar solicitud `POST` a la ruta: `https://night-life-api.onrender.com/api/locales/id/reviews` cambiando `id` por el id del local que se este evaluando.
 Agregar el header: `Content-Type: application/json`
+Agregar el header: `Authorization` con el valor `Bearer token`, sustituyendo `token` por el valor correspondiente y respetando el espacio.
 Agregar la información de la review como un objeto json en el body.
 
 ```json
 {
-    "content": "El local es una puta basura.",
-    "date": Date (opcional),
-    "userId": "645a2881417af83932e98aaa",
-    "local": "312a2881417af83932e98aaa"
+    "content": "El local es una puta basura."
 }
 ```
-
-En caso de no incluir el campo `date` el servidor le asignara la fecha y hora en el que se crea la review.
 
 ## Usuarios
 
@@ -105,6 +120,11 @@ Agregar la información del usuario como un objeto json en el body.
 
 El nombre de usuario y el email deben ser unicos y se hara la comprobacion pertinente en el servidor.
 
+### Obtener informacion de tu perfil
+
+Mandar solicitud `GET` a la ruta: `https://night-life-api.onrender.com/api/users/profile`.
+Agregar el header: `Authorization` con el valor `Bearer token`, sustituyendo `token` por el valor correspondiente y respetando el espacio.
+
 ### Obtener informacion de un usuario
 
 Mandar solicitud `GET` a la ruta: `https://night-life-api.onrender.com/api/users/id` sustituyendo 'id' por el numero correspondiente.
@@ -119,4 +139,4 @@ Mandar solicitud `GET` a la ruta: `https://night-life-api.onrender.com/api/users
 
 4. Para iniciar el servidor en modo desarrollo ejecutar el comando `npm run dev`.
 
-5. El servidor se inicia en localhost:3001 .
+5. El servidor se inicia en localhost:3001.
