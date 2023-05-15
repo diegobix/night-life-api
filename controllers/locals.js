@@ -14,27 +14,25 @@ localsRouter.get('/', async (request, response, next) => {
   }
 })
 
-localsRouter.get('/:id', (request, response, next) => {
-  Local.findById(request.params.id)
-    .populate({
-      path: 'user',
-      select: 'username email'
-    })
-    .populate({
-      path: 'reviews',
-      select: '-local',
-      populate: {path: 'user', select: 'username'}
-    })
-    .then(local => {
-      if (local) {
-        response.json(local)
-      } else {
-        response.status(404).end()
-      }
-    })
-    .catch(error =>{
-      console.log("error " + error)
-      next(error)})
+localsRouter.get('/:id', async (request, response, next) => {
+  try {
+    const local = await Local.findById(request.params.id)
+      .populate({
+        path: 'user',
+        select: 'username email'
+      })
+      .populate({
+        path: 'reviews',
+        select: '-local',
+        populate: {path: 'user', select: 'username'}
+      })
+
+    if (!local) return response.status(404).send({error: 'local not found'})
+
+    response.status(200).json(local)
+  } catch (error) {
+    next(error)
+  }
 })
 
 localsRouter.post('/', async (request, response, next) => {
@@ -94,21 +92,25 @@ localsRouter.post('/:id/reviews', async (request, response, next) => {
   }
 })
 
-localsRouter.delete('/:id', (request, response, next) => {
-  Local.findByIdAndRemove(request.params.id)
-    .then(() => {
-      response.status(204).end()
-    })
-    .catch(error => next(error))
+localsRouter.delete('/:id', async (request, response, next) => {
+  try {
+    await Local.findByIdAndRemove(request.params.id)
+
+    response.status(204).end()
+  } catch(error) {
+    next(error)
+  }
 })
 
-localsRouter.put('/:id', (request, response, next) => {
-  const {nombre, direccion, musica, consumicion, horario} = request.body
-  Local.findByIdAndUpdate(request.params.id, {nombre, direccion, musica, consumicion, horario}, {new: true, runValidators: true, context: 'query'})
-    .then(updatedLocal => {
-      response.json(updatedLocal)
-    })
-    .catch(error => next(error))
+localsRouter.put('/:id', async (request, response, next) => {
+  try {
+    const {nombre, direccion, musica, consumicion, horario} = request.body
+    const updatedLocal = await Local.findByIdAndUpdate(request.params.id, {nombre, direccion, musica, consumicion, horario}, {new: true, runValidators: true, context: 'query'})
+    response.status(200).json(updatedLocal)
+
+  } catch(error) {
+    next(error)
+  }
 })
 
 module.exports = localsRouter
