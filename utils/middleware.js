@@ -1,11 +1,13 @@
 const logger = require('./logger')
 
 const requestLogger = (request, response, next) => {
-  const clientIP = request.headers['x-forwarded-for']?.split(',').shift() || req.socket?.remoteAddress
+  const clientIP = request.headers['x-forwarded-for']?.split(',').shift() || request.socket?.remoteAddress
   logger.info('Dir:', clientIP)
   logger.info('Method:', request.method)
   logger.info('Path:  ', request.path)
-  logger.info('Body:  ', request.body)
+  const output = {...request.body}
+  delete output.password
+  logger.info('Body:  ', output)
   logger.info('---')
   next()
 }

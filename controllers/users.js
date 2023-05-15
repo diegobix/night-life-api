@@ -41,7 +41,10 @@ usersRouter.get('/:id', async (req, res, next) => {
 usersRouter.post('/', async (request, response, next) => {
   try {
     const {username, name, email, password} = request.body
-  
+    if (!username || !name || !email || !password) {
+      return response.status(400).send({error: 'some field is missing'})
+    }
+
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(password, saltRounds)
   
