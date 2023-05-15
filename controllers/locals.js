@@ -22,10 +22,10 @@ localsRouter.get('/:id', (request, response, next) => {
     })
     .populate({
       path: 'reviews',
+      select: '-local',
       populate: {path: 'user', select: 'username'}
     })
     .then(local => {
-      console.log(local)
       if (local) {
         response.json(local)
       } else {

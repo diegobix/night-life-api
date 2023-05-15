@@ -38,7 +38,7 @@ usersRouter.get('/:id', async (req, res, next) => {
   }
 })
 
-usersRouter.post('/', async (request, response) => {
+usersRouter.post('/', async (request, response, next) => {
   try {
     const {username, name, email, password} = request.body
   
