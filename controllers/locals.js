@@ -94,18 +94,36 @@ localsRouter.post('/:id/reviews', async (request, response, next) => {
 
 localsRouter.delete('/:id', async (request, response, next) => {
   try {
-    await Local.findByIdAndRemove(request.params.id)
+    const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
+    if (!decodedToken.id) return response.status(401).send({error: 'invalid token'})
+    
+    const user = await User.findById(decodedToken.id)
+    const local = await Local.findById(request.params.id)
+    if (!local) return response.status(204).end()
 
+    if (user.id !== local.user.toString()) return response.status(403).send({error: 'local trying to delete is from other user'})
+
+    await local.deleteOne()
     response.status(204).end()
-  } catch(error) {
+  } catch (error) {
     next(error)
   }
 })
 
 localsRouter.put('/:id', async (request, response, next) => {
   try {
+    const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
+    if (!decodedToken.id) return response.status(401).send({error: 'invalid token'})
+
+    const user = await User.findById(decodedToken.id)
+    let local = await Local.findById(request.params.id)
+    if (!local) return response.status(204).end()
+
     const {nombre, direccion, musica, consumicion, horario} = request.body
-    const updatedLocal = await Local.findByIdAndUpdate(request.params.id, {nombre, direccion, musica, consumicion, horario}, {new: true, runValidators: true, context: 'query'})
+    if (!nombre || !direccion || !musica || !consumicion || !horario) return response.status(400).send({error: 'some field is missing'})
+
+    Object.assign(local, {nombre, direccion, musica, consumicion, horario})
+    const updatedLocal = await local.save()
     response.status(200).json(updatedLocal)
 
   } catch(error) {
