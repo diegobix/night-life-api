@@ -10,6 +10,7 @@ Api de la aplicacion web NightLife
     - [Obtener información de un local concreto](#obtener-información-de-un-local-concreto)
     - [Agregar un local nuevo](#agregar-un-local-nuevo)
     - [Actualizar un local](#actualizar-un-local)
+    - [Eliminar un local](#eliminar-un-local)
     - [Agregar reseña](#agregar-reseña)
   - [Usuarios](#usuarios)
     - [Agregar un nuevo usuario](#agregar-un-nuevo-usuario)
@@ -87,6 +88,11 @@ Agregar la información del local como un objeto json en el body. Por ejemplo:
     "horario": "23:00-03:00"
 }
 ```
+
+### Eliminar un local
+
+Mandar solicitud `DELETE` a la ruta: `https://night-life-api.onrender.com/api/locales/id` sustituyendo 'id' por el numero correspondiente.
+Agregar el header: `Authorization` con el valor `Bearer token`, sustituyendo `token` por el valor correspondiente y respetando el espacio.
 
 ### Agregar reseña
 
