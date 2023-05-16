@@ -1,8 +1,9 @@
 # NightLife API
 
-Api de la aplicacion web NightLife
+Api de la aplicacion web [NightLife](http://jesuscuesta.es/nightlife)
 
 - [NightLife API](#nightlife-api)
+  - [Instalar el proyecto](#instalar-el-proyecto)
   - [Login en la aplicacion](#login-en-la-aplicacion)
     - [Token](#token)
   - [Locales](#locales)
@@ -16,8 +17,19 @@ Api de la aplicacion web NightLife
     - [Agregar un nuevo usuario](#agregar-un-nuevo-usuario)
     - [Obtener informacion de tu perfil](#obtener-informacion-de-tu-perfil)
     - [Obtener informacion de un usuario](#obtener-informacion-de-un-usuario)
-  - [Instalar el proyecto](#instalar-el-proyecto)
 
+## Instalar el proyecto
+
+1. Clonar el pryecto `git clone https://github.com/Smmook/night-life-api.git`
+
+2. Abrir consola en la carpeta night-life-api
+
+3. Ejecutar `npm install` para instalar dependencias.
+
+4. Para iniciar el servidor en modo desarrollo ejecutar el comando `npm run dev`.
+
+5. El servidor se inicia en localhost:3001.
+   
 ## Login en la aplicacion
 
 Mandar solicitud `POST` a la ruta `https://night-life-api.onrender.com/api/login` con el header `Content-Type: application/json`. En el `body` de la solicitud incluir en formato json los datos de login:
@@ -134,15 +146,3 @@ Agregar el header: `Authorization` con el valor `Bearer token`, sustituyendo `to
 ### Obtener informacion de un usuario
 
 Mandar solicitud `GET` a la ruta: `https://night-life-api.onrender.com/api/users/id` sustituyendo 'id' por el numero correspondiente.
-
-## Instalar el proyecto
-
-1. Clonar el pryecto `git clone https://github.com/Smmook/night-life-api.git`
-
-2. Abrir consola en la carpeta night-life-api
-
-3. Ejecutar `npm install` para instalar dependencias.
-
-4. Para iniciar el servidor en modo desarrollo ejecutar el comando `npm run dev`.
-
-5. El servidor se inicia en localhost:3001.
