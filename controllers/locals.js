@@ -62,7 +62,7 @@ localsRouter.post('/:id/reviews', async (request, response, next) => {
     const local = await Local.findById(request.params.id)
     if (!local) return response.status(400).send({ error: 'local not found' })
 
-    const { content, date } = request.body
+    const { content } = request.body
 
     const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
     if (!decodedToken.id)
@@ -75,7 +75,7 @@ localsRouter.post('/:id/reviews', async (request, response, next) => {
 
     const review = new Review({
       content,
-      date: date ? date : new Date(),
+      date: new Date(),
       user: user._id,
       local: local._id,
     })
