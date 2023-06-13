@@ -1,6 +1,6 @@
 # NightLife API
 
-Api de la aplicacion web [NightLife](http://jesuscuesta.es/nightlife)
+Api de la aplicacion web [NightLife](https://smmook.github.io/night-life/)
 
 - [NightLife API](#nightlife-api)
   - [Instalar el proyecto](#instalar-el-proyecto)
@@ -115,7 +115,7 @@ Agregar la información de la review como un objeto json en el body.
 
 ```json
 {
-    "content": "El local es una puta basura."
+    "content": "El local es una maravilla."
 }
 ```
 
