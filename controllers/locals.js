@@ -7,7 +7,7 @@ const { getTokenFrom } = require('../utils/token')
 
 localsRouter.get('/', async (request, response, next) => {
   try {
-    const locals = await Local.find({}, 'nombre direccion horario consumicion')
+    const locals = await Local.find({}, 'nombre direccion horario tipo')
     response.status(200).json(locals)
   } catch (error) {
     next(error)

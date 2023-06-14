@@ -32,6 +32,11 @@ const localSchema = new mongoose.Schema({
     minLength: 2,
     required: true,
   },
+  tipo: {
+    type: String,
+    required: true,
+    enum: ['discoteca', 'sala', 'bar'],
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
